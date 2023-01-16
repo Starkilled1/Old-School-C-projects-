@@ -1,0 +1,104 @@
+#include <Servo.h>
+#include <math.h>
+Servo servo1;
+Servo servo2;
+ 
+int t =180;
+
+//Arreglos para guardar angulos
+float q1[179];
+float q2[179];
+
+//Arreglos para guardar las coordenadas de funciones parametricas
+float Fx[179];
+float Fy[179];
+  //float x[179];
+  //float y[179];
+
+//Medidas de nuestros brazos roboticos
+//double a1 = 0.135; //link1
+double a1 = 0.15;
+double a2 = 0.15; //link2
+
+//Variables para calculo de cinematica inversa
+double r; 
+double SenA;
+double CosA;
+double SenC;
+double CosC;
+
+//Variable para guardar valores de funcion radianes()
+double rad; 
+
+void setup(){
+  Serial.begin(115200);
+  
+  servo1.attach(9);
+  servo2.attach(10);
+  
+}
+    //Funcion para convertir a grados
+    double grados(double q){
+    double result = (q/(2.0*PI))*360.0;
+    return result;
+    }
+  
+    //Funcion para convertir a radianes
+    double radianes(int i){
+    double result = (float(i)/180.0)*2.0*PI;
+    return result;
+    }
+
+void loop(){
+    //servo1.write(90);
+    //servo2.write(0);
+    //delay(2000);
+    
+    for(int i = 0; i < t; i++){
+    rad = radianes(i);
+    
+    //Ecuaciones parametricas corazon
+    //Fx[i]=  0.04 + (0.04)*(0.12*sin(rad)-0.04*sin(3*rad));
+    //Fy[i] = 0.02 + 0.04*(0.13*cos(rad) - 0.05*cos(2*rad) -0.02*cos(3*rad) - 0.01*cos(4*rad));
+    
+    //Ecuacion parametrica circulo
+    Fx[i] = 0.07 + 0.02*cos(rad);   //cm 
+    Fy[i] = -0.08 + 0.02*sin(rad);
+
+    //Fx[i] = 0.03 + (-0.02*rad);
+    //Fy[i] = 0.05 + (0.01*rad);
+    
+    //ecuacion flor de 5 petalos 
+    //Fx[i]= .04 + (.02*sin(5*rad))*(cos(rad));
+    //Fy[i]= .08 + (.02*sin(5*rad))*(sin(rad));
+   
+    //cinematica inversa del otro chango
+    r = sqrt( pow(Fx[i],2) + pow(Fy[i],2) );
+    SenA = sqrt( 1 - pow( ( (pow(r,2) + pow(a1,2) - pow(a2,2)) )/( 2.0*r*a1 ) , 2 ) );
+    CosA = ( (pow(r,2) + pow(a1,2) - pow(a2,2)) )/( 2.0*r*a1 );
+    q1[i] = atan2( Fy[i], Fx[i] ) + atan2( SenA, CosA );
+    SenC = sqrt( 1 - pow( ( (-1*pow(a1,2) - pow(a2,2) + pow(r,2)) )/( 2.0*a1*a2 ) , 2 ) );
+    CosC = ( (-1*pow(a1,2) - pow(a2,2) + pow(r,2)) )/( 2.0*a1*a2 );
+    q2[i] = PI - atan2(SenC, CosC); // le cambie un +
+
+
+
+    
+    //cinematica mtlab 
+    //x[i] = 0.04 + (0.2*sin(5*rad))*(cos(rad))
+    //y[i] = 2 + (2*sin(5*rad))*(sin(rad));
+    //double A;
+    //A = atan2(y[i],x[i]);
+    //q2[i] = (acos(pow(x[i],2.0) + pow(y[i],2.0) - pow(a1,2.0) - pow(a2,2.0))/(2.0*a1*a2))-2000;
+    //q1[i] = A + atan2((a2 * sin(q2[i])),(a1 + a2*cos(q2[i])));
+
+    
+    //Escribir grados en servos
+    servo1.write(grados(q1[i]));
+    servo2.write(grados(q2[i]));
+    delay(50);    
+
+    Serial.println(grados(q1[i]));
+    }
+} 
+//}
