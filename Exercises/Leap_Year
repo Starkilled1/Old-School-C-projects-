@@ -1,0 +1,48 @@
+#include<stdio.h>
+
+int main(void){
+	int v;
+	int a=2018;
+	
+	printf("Programa hecho por Javier Alarcon Velazco A01252284\n");
+	printf("\n");
+	printf("Inserte el a%co que desea saber si es bisiesto: \n", 164);
+	scanf("%d", &v);
+		printf("\n");
+	
+	if((!(v%4) && (v%100)) || !(v%400)){
+
+    		printf("\n");
+	
+	if(v==a){
+		printf("Este a%co es el actual es bisiesto \n", 164);
+	}
+	else if(v>a){
+		printf("este a%co sera bisiesto\n", 164);
+	}
+	else{
+		printf("Este a%co fue bisiesto\n", 164);
+	}
+	
+	}
+	
+	else{
+			printf("\n");
+	
+	if(v==a){
+		printf("Este a%co es el actual, no es bisiesto \n", 164);
+	}
+	else if(v>a){
+		printf("este a%co no sera bisiesto\n", 164);
+	}
+	else{
+		printf("Este a%co no fue bisiesto\n", 164);
+	}
+	
+	}
+	
+	
+	
+	getch();
+	return 0;
+}
