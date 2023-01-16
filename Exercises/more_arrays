@@ -1,0 +1,52 @@
+#include<stdio.h>
+
+int main(void){
+	int con=0;
+	int arrai [10];
+	int c, menor=0, a, mayor=0;
+	
+	for(con=0;con<10;con++){
+		printf("Ingrese el Elemento : ");
+		scanf("%d", &arrai[con]);
+	}
+	
+printf("\n");
+printf("\n");
+
+printf("El arreglo es: ");
+	for(con=0;con<10;con++){
+		printf("%d \t", arrai[con]);
+	}
+	
+printf("\n");
+printf("\n");
+
+menor=arrai[0];
+for(c=1;c<10;c++){
+	if(arrai[c]<arrai[menor])
+		menor=c;
+
+}
+printf("El numero menor es: %d y su posicion %d \n", arrai[menor], menor+1);
+
+printf("\n");
+printf("\n");
+
+mayor=arrai[0];
+for(a=1;a<10;a++){
+	if(arrai[a]>arrai[mayor])
+		mayor=a;
+
+}
+printf("El numero mayor es: %d y su posicion %d \n", arrai[mayor], mayor+1);
+
+printf("\n");
+
+
+
+
+
+
+	getch();
+	return 0;
+}
