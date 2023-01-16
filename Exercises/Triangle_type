@@ -1,0 +1,60 @@
+#include<stdio.h>
+#include<math.h>
+
+int main(void){
+
+	float aa,ba,ab,bb,ac,bc;
+	float distancia1;
+	float distancia2;
+	float distancia3;
+	printf("Programa hecho por Javier Alarcon Velazco A01252284\n");
+		printf ("\n");
+		
+	printf("Inserte las primera coordenada:\n");
+	scanf("%f", &aa);
+	scanf("%f", &ba);
+		printf ("\n");
+		
+		
+	printf("Inserte las segunda coordenada:\n");
+	scanf("%f", &ab);
+	scanf("%f", &bb);
+		printf ("\n");
+		
+	printf("Inserte las tercera coordenada:\n");
+	scanf("%f", &ac);
+	scanf("%f", &bc);
+		printf ("\n");
+	
+	
+	distancia1=sqrt (pow ((ab - aa),2) + pow ((bb - ba),2));
+	
+	distancia2=sqrt (pow ((ac - ab),2) + pow ((bc - bb),2));
+	
+	distancia3=sqrt (pow ((ac - aa),2) + pow ((bc - ba),2));
+	
+	printf ("\n");
+	
+	if (distancia3 == distancia1 + distancia2)
+	{
+		printf ("No es un tri%cngulo.", 160);
+	}
+	
+	else
+	{
+		printf ("Es un tri%cngulo.", 160);
+		printf ("\n");
+			
+		if(distancia1==distancia2 && distancia2==distancia3)
+        { printf("Es equilatero\n"); }
+        if(distancia1==distancia2 && distancia2!=distancia3 || distancia2==distancia3 && distancia3!=distancia1 || distancia3==distancia1 && distancia1!=distancia2)
+        { printf("Es isosceles\n"); }
+        if(distancia1!=distancia2 && distancia2!=distancia3 && distancia3!=distancia1)
+        { printf("Es escaleno\n"); }
+
+	}
+	
+	
+	getch();
+	return 0;
+}
